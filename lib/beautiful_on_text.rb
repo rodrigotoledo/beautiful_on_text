@@ -1,4 +1,8 @@
 # frozen_string_literal: true
+require 'openai'
+require 'dotenv/load'
+require_relative 'formatters/html_formatter'
+require_relative 'formatters/plain_text_formatter'
 
 module BeautifulOnText
   class Error < StandardError; end
@@ -23,7 +27,7 @@ module BeautifulOnText
 
   def beautify(text, format = :text)
     if format == :text
-      improved_text = Openai::Client.new(api_key: 'YOUR_API_KEY').complete(
+      improved_text = OpenAI::Client.new(api_key: ENV['CHAT_GPT_KEY']).completions(
         engine: 'text-davinci-002',
         prompt: text,
         max_tokens: 200,
@@ -34,9 +38,9 @@ module BeautifulOnText
         presence_penalty: 0
       ).choices.first.text
 
-      PlainTextFormatter.format(improved_text)
+      BeautifulOnText::Formatters::PlainTextFormatter.format(improved_text)
     else
-      improved_text = Openai::Client.new(api_key: 'YOUR_API_KEY').complete(
+      improved_text = OpenAI::Client.new(api_key: ENV['CHAT_GPT_KEY']).completions(
         engine: 'davinci',
         prompt: text,
         max_tokens: 200,
@@ -47,7 +51,7 @@ module BeautifulOnText
         presence_penalty: 0
       ).choices.first.text
 
-      HtmlFormatter.format(improved_text)
+      BeautifulOnText::Formatters::HtmlFormatter.format(improved_text)
     end
   end
 end
