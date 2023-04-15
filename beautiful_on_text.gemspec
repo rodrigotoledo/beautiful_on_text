@@ -1,7 +1,7 @@
 require_relative 'lib/beautiful_on_text'
 Gem::Specification.new do |spec|
   spec.name          = 'beautiful_on_text'
-  spec.version       = BeautifulOnText::VERSION
+  spec.version       = '0.0.1'
   spec.authors       = ['Rodrigo Toledo']
   spec.email         = ['rodrigo@rtoledo.inf.br']
   spec.summary       = 'A gem for beautifying text before saving it to a database'
@@ -16,6 +16,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'actionview', '>= 7.0.0'
   spec.add_dependency 'activerecord', '>= 7.0.0'
+  spec.add_dependency 'dotenv'
   spec.add_dependency 'irb'
   spec.add_dependency 'ruby-openai', '>= 0.3.0'
 
